@@ -5,10 +5,15 @@ class Main {
         // путь до файла
         private const val filePath = "C:\\Users\\Serge\\Desktop\\EcwidTask\\listIpAddres.txt"
 
+
         @JvmStatic
         fun main(args: Array<String>) {
 
-            FileHelper.getTextLine(filePath)
+            val listIp = FileHelper().getTextLine(filePath)
+
+            val listUniqueIp = IpAddressFilter().launchDirectSearch(listIp)
+
+            Log.message(listUniqueIp)
         }
     }
 }
