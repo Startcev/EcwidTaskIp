@@ -9,11 +9,11 @@ class Main {
         @JvmStatic
         fun main(args: Array<String>) {
 
-            val listIp = FileHelper().getTextLine(filePath)
+            val ipAddressCount = IpAddressCounter.getIpAddressSizeFromHashSet(filePath)
+            Log.message(ipAddressCount.toString())
 
-            val listUniqueIp = IpAddressFilter().launchDirectSearch(listIp)
-
-            Log.message(listUniqueIp)
+            val ipAddressCountV2 = IpAddressCounter.getIpAddressSizeFromMutableList(filePath)
+            Log.message(ipAddressCountV2.toString())
         }
     }
 }

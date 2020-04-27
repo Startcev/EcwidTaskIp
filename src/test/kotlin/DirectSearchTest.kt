@@ -1,3 +1,4 @@
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class DirectSearchTest {
@@ -9,14 +10,22 @@ class DirectSearchTest {
 
     // маленький тест на проверку прямой фильтрации
     @Test
-    fun smallDirectionSearchTest() {
+    fun directPassAlgorithmTest() {
 
-        val listIp = FileHelper().getTextLine(smallFilePatch)
+        val ipAddressCount = IpAddressCounter.getIpAddressSizeFromMutableList(smallFilePatch)
 
-        val listUniqueIpAddress = IpAddressFilter().launchDirectSearch(listIp)
+        val correctCount = FileHelper().getTextLine(correctSmallFilePath).size
 
-        val correctList = FileHelper().getTextLine(correctSmallFilePath)
+        assertEquals(ipAddressCount, correctCount)
+    }
 
-        assert(listUniqueIpAddress == correctList)
+    @Test
+    fun hashSetAlgorithmTest() {
+
+        val ipAddressCount = IpAddressCounter.getIpAddressSizeFromHashSet(smallFilePatch)
+
+        val correctCount = FileHelper().getTextLine(correctSmallFilePath).size
+
+        assertEquals(ipAddressCount, correctCount)
     }
 }
