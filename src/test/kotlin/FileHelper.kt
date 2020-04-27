@@ -2,7 +2,7 @@ import java.io.File
 import java.io.InputStream
 
 // класс для работы с файлами
-object FileHelper {
+class FileHelper {
 
     // функция получения списка строк из файла по указанному пути
     fun getTextLine(filePath: String): List<String> {
