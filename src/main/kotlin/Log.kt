@@ -1,17 +1,26 @@
 /**
  * вспомогательный класс для вывода логов
  */
-object Log {
+class Log {
 
-    // принимает сообщение и печает строку в консоль
-    fun message(message: String) {
-        println("[INFO] $message")
-    }
+    companion object {
 
-    // принимает лист сообщений и циклом выводит в консоль
-    fun message(message: List<String>) {
-        message.forEach { _ ->
+        // принимает сообщение сообщая, что действие завершено
+        fun <T> s(message: T) {
+            println("[SUCCESS] $message")
+        }
+
+
+        // принимает сообщение и печает строку в консоль
+        fun <T> m(message: T) {
             println("[INFO] $message")
+        }
+
+        // принимает лист сообщений и циклом выводит в консоль
+        fun <T> m(message: List<T>) {
+            message.forEach { _ ->
+                println("[INFO] $message")
+            }
         }
     }
 }

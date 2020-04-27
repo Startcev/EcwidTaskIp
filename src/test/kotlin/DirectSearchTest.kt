@@ -10,22 +10,22 @@ class DirectSearchTest {
 
     // маленький тест на проверку прямой фильтрации
     @Test
-    fun directPassAlgorithmTest() {
+    fun smallTest() {
 
-        val ipAddressCount = IpAddressCounter.getIpAddressSizeFromMutableList(smallFilePatch)
+        val ipAddressCount = IpAddressCounter.getCountIpUniqueAddress(smallFilePatch)
 
-        val correctCount = FileHelper().getTextLine(correctSmallFilePath).size
+        val correctCount = FileHelper().getTextLine(correctSmallFilePath).size.toLong()
 
         assertEquals(ipAddressCount, correctCount)
     }
 
     @Test
-    fun hashSetAlgorithmTest() {
+    fun bigFileTest() {
 
-        val ipAddressCount = IpAddressCounter.getIpAddressSizeFromHashSet(smallFilePatch)
+        val filePath = smallFilePatch
 
-        val correctCount = FileHelper().getTextLine(correctSmallFilePath).size
+        val ipAddressCount = IpAddressCounter.getCountIpUniqueAddress(filePath)
 
-        assertEquals(ipAddressCount, correctCount)
+        Log.s(ipAddressCount)
     }
 }

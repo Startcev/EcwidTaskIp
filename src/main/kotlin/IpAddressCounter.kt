@@ -8,47 +8,84 @@ class IpAddressCounter {
 
     companion object {
 
-        // функция получения списка строк из файла по указанному пути
-        private fun getListIpAddress(filePath: String): List<String> {
-            val inputStream: InputStream = File(filePath).inputStream()
-            val lineList = mutableListOf<String>()
+        private const val fileBannedIpAddress = "bannedList"
 
-            inputStream.bufferedReader().useLines { lines ->
-                lines.forEach {
-                    lineList.add(it)
+        // находится ли адресс в списке заблокированных
+        private fun isIpAddressBanned(ipAddress: String): Boolean {
+            val inputStreamBannedList: InputStream = File(fileBannedIpAddress).inputStream()
+
+            inputStreamBannedList.bufferedReader().useLines { bannedLines ->
+
+                bannedLines.forEach { bannedIpAddress ->
+
+                    if (ipAddress == bannedIpAddress) return true
                 }
             }
-            return lineList
+            return false
         }
 
-        // получить колличество используя функцию прямого выбора
-        fun getIpAddressSizeFromMutableList(filePath: String): Int {
-            val listIpAddress = getListIpAddress(filePath)
-            val listUniqueIp = mutableListOf<String>()
-            // проходимся по списку адресов
-            listIpAddress.forEach { ipAddress ->
-
-                // проверяем содержится ли адрес в списке
-                if (!listUniqueIp.contains(ipAddress)) {
-
-                    // добавляем адресс
-                    listUniqueIp.add(ipAddress)
-                }
-            }
-            return listUniqueIp.size
+        // записать в заблокированные адреса
+        private fun writeToBannedAddresses(ipAddress: String) {
+            val bannedFileWriter = File(fileBannedIpAddress).bufferedWriter()
+            bannedFileWriter.newLine()
+            bannedFileWriter.write(ipAddress)
+            bannedFileWriter.close()
         }
 
-        // получить колличество используя hashSet
-        fun getIpAddressSizeFromHashSet(filePath: String): Int {
+        // получить элемент по индексу
+        private fun getElementForIndex(filePath: String, index: Int): String {
             val inputStream: InputStream = File(filePath).inputStream()
-            val lineList = mutableSetOf<String>()
+            inputStream.bufferedReader().useLines { lines ->
+                return lines.elementAt(index)
+            }
+        }
+
+        // проверка совпадения адреса
+        private fun checkingIfAddressMatches(
+            ipAddress: String,
+            indexIpAddress: Int,
+            filePath: String
+        ): Boolean {
+
+            val inputStream: InputStream = File(filePath).inputStream()
 
             inputStream.bufferedReader().useLines { lines ->
-                lines.forEach {
-                    lineList.add(it)
+
+                if (!isIpAddressBanned(ipAddress)) {
+
+                    for (index in indexIpAddress until lines.count()) {
+                        if (indexIpAddress != index) {
+
+                            if (ipAddress == getElementForIndex(filePath, index)) {
+
+                                writeToBannedAddresses(ipAddress)
+                                return true
+                            }
+                        }
+                    }
+                    return true
+                } else return false
+            }
+        }
+
+        // получить колличество уникальных адресов
+        fun getCountIpUniqueAddress(filePath: String): Long {
+
+            var countWrite = 0L
+            File(fileBannedIpAddress).createNewFile()
+
+            val inputStream: InputStream = File(filePath).inputStream()
+            var count = 0L
+
+            inputStream.bufferedReader().useLines { lines ->
+                lines.forEachIndexed { indexIpAddress, ipAddress ->
+                    if (checkingIfAddressMatches(ipAddress, indexIpAddress, filePath)) count++
+                    countWrite++
+                    if ((countWrite % 5) == 0L) println("[INFO] Passed $countWrite entries")
                 }
             }
-            return lineList.size
+            File(fileBannedIpAddress).delete()
+            return count
         }
     }
 }
