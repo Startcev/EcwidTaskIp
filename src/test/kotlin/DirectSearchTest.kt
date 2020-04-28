@@ -18,14 +18,4 @@ class DirectSearchTest {
 
         assertEquals(ipAddressCount, correctCount)
     }
-
-    @Test
-    fun bigFileTest() {
-
-        val filePath = "F:\\EcwidTestBigFile\\ip_addresses.txt"
-
-        val ipAddressCount = IpAddressCounter.getCountUniqueIpAddress(filePath)
-
-        Log.s(ipAddressCount)
-    }
 }
