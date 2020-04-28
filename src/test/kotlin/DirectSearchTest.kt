@@ -12,7 +12,7 @@ class DirectSearchTest {
     @Test
     fun smallTest() {
 
-        val ipAddressCount = IpAddressCounter.getCountIpUniqueAddress(smallFilePatch)
+        val ipAddressCount = IpAddressCounter.getCountUniqueIpAddress(smallFilePatch)
 
         val correctCount = FileHelper().getTextLine(correctSmallFilePath).size.toLong()
 
@@ -24,7 +24,7 @@ class DirectSearchTest {
 
         val filePath = "F:\\EcwidTestBigFile\\ip_addresses.txt"
 
-        val ipAddressCount = IpAddressCounter.getCountIpUniqueAddress(filePath)
+        val ipAddressCount = IpAddressCounter.getCountUniqueIpAddress(filePath)
 
         Log.s(ipAddressCount)
     }

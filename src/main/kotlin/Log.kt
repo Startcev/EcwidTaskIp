@@ -12,15 +12,8 @@ class Log {
 
 
         // принимает сообщение и печает строку в консоль
-        fun <T> m(message: T) {
+        fun <T> i(message: T) {
             println("[INFO] $message")
-        }
-
-        // принимает лист сообщений и циклом выводит в консоль
-        fun <T> m(message: List<T>) {
-            message.forEach { _ ->
-                println("[INFO] $message")
-            }
         }
     }
 }

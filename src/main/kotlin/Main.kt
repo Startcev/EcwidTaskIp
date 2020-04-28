@@ -9,8 +9,8 @@ class Main {
         @JvmStatic
         fun main(args: Array<String>) {
 
-            val ipAddressCount = IpAddressCounter.getCountIpUniqueAddress(filePath)
-            Log.m(ipAddressCount)
+            val ipAddressCount = IpAddressCounter.getCountUniqueIpAddress(filePath)
+            Log.i(ipAddressCount)
         }
     }
 }

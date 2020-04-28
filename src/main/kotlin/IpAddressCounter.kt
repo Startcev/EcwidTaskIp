@@ -2,7 +2,7 @@ import java.io.File
 import java.io.InputStream
 
 /**
- * содержит алгоритмы для подсчета уникальных ip адресов
+ * содержит алгоритм для подсчета уникальных ip адресов
  */
 class IpAddressCounter {
 
@@ -32,21 +32,12 @@ class IpAddressCounter {
             bannedFileWriter.close()
         }
 
-        // получить элемент по индексу
-        private fun getElementForIndex(filePath: String, index: Int): String {
-            val inputStream: InputStream = File(filePath).inputStream()
-            inputStream.bufferedReader().useLines { lines ->
-                return lines.elementAt(index)
-            }
-        }
-
         // проверка совпадения адреса
         private fun checkingIfAddressMatches(
             ipAddress: String,
             indexIpAddress: Int,
             filePath: String
         ): Boolean {
-
             val inputStream: InputStream = File(filePath).inputStream()
 
             inputStream.bufferedReader().useLines { lines ->
@@ -70,19 +61,14 @@ class IpAddressCounter {
         }
 
         // получить колличество уникальных адресов
-        fun getCountIpUniqueAddress(filePath: String): Long {
-
-            var countWrite = 0L
+        fun getCountUniqueIpAddress(filePath: String): Long {
             File(fileBannedIpAddress).createNewFile()
-
             val inputStream: InputStream = File(filePath).inputStream()
             var count = 0L
 
             inputStream.bufferedReader().useLines { lines ->
                 lines.forEachIndexed { indexIpAddress, ipAddress ->
                     if (checkingIfAddressMatches(ipAddress, indexIpAddress, filePath)) count++
-                    countWrite++
-                    if ((countWrite % 5) == 0L) println("[INFO] Passed $countWrite entries")
                 }
             }
             File(fileBannedIpAddress).delete()
