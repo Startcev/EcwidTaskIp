@@ -22,7 +22,7 @@ class DirectSearchTest {
     @Test
     fun bigFileTest() {
 
-        val filePath = smallFilePatch
+        val filePath = "F:\\EcwidTestBigFile\\ip_addresses.txt"
 
         val ipAddressCount = IpAddressCounter.getCountIpUniqueAddress(filePath)
 

@@ -8,7 +8,7 @@ class IpAddressCounter {
 
     companion object {
 
-        private const val fileBannedIpAddress = "bannedList"
+        private const val fileBannedIpAddress = "bannedList.txt"
 
         // находится ли адресс в списке заблокированных
         private fun isIpAddressBanned(ipAddress: String): Boolean {
@@ -53,10 +53,11 @@ class IpAddressCounter {
 
                 if (!isIpAddressBanned(ipAddress)) {
 
-                    for (index in indexIpAddress until lines.count()) {
+                    lines.forEachIndexed { index, s ->
+
                         if (indexIpAddress != index) {
 
-                            if (ipAddress == getElementForIndex(filePath, index)) {
+                            if (ipAddress == s) {
 
                                 writeToBannedAddresses(ipAddress)
                                 return true
